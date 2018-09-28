@@ -17,10 +17,11 @@ describe('PingController', () => {
         await app.stop();
     });
     it('invokes GET /ping', async () => {
-        await client.get('/ping?msg=world').expect(200);
+        const res = await client.get('/ping?msg=world').expect(200);
+        testlab_1.expect(res.body).to.containEql({ greeting: 'Hello from LoopBack' });
     });
     function givenAnApplication() {
-        app = new __1.FamilyTree_2Application({
+        app = new __1.FamilyTreeApplication({
             rest: testlab_1.givenHttpServerConfig(),
         });
     }

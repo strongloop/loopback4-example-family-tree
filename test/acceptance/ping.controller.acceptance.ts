@@ -2,11 +2,12 @@ import {
   Client,
   createRestAppClient,
   givenHttpServerConfig,
+  expect,
 } from '@loopback/testlab';
-import {FamilyTree_2Application} from '../..';
+import {FamilyTreeApplication} from '../..';
 
 describe('PingController', () => {
-  let app: FamilyTree_2Application;
+  let app: FamilyTreeApplication;
   let client: Client;
 
   before(givenAnApplication);
@@ -25,11 +26,12 @@ describe('PingController', () => {
   });
 
   it('invokes GET /ping', async () => {
-    await client.get('/ping?msg=world').expect(200);
+    const res = await client.get('/ping?msg=world').expect(200);
+    expect(res.body).to.containEql({greeting: 'Hello from LoopBack'});
   });
 
   function givenAnApplication() {
-    app = new FamilyTree_2Application({
+    app = new FamilyTreeApplication({
       rest: givenHttpServerConfig(),
     });
   }

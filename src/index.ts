@@ -1,10 +1,10 @@
-import {FamilyTree_2Application} from './application';
+import {FamilyTreeApplication} from './application';
 import {ApplicationConfig} from '@loopback/core';
 
-export {FamilyTree_2Application};
+export {FamilyTreeApplication};
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new FamilyTree_2Application(options);
+  const app = new FamilyTreeApplication(options);
   await app.boot();
   await app.start();
 

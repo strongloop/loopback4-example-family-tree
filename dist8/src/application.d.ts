@@ -1,6 +1,6 @@
 import { ApplicationConfig } from '@loopback/core';
 import { RestApplication } from '@loopback/rest';
-declare const FamilyTree_2Application_base: (new (...args: any[]) => {
+declare const FamilyTreeApplication_base: (new (...args: any[]) => {
     [x: string]: any;
     projectRoot: string;
     bootOptions?: import("@loopback/boot/dist8/src/interfaces").BootOptions | undefined;
@@ -21,7 +21,7 @@ declare const FamilyTree_2Application_base: (new (...args: any[]) => {
     component(component: import("@loopback/repository/dist8/src/common-types").Class<{}>): void;
     mountComponentRepositories(component: import("@loopback/repository/dist8/src/common-types").Class<{}>): void;
 }) & typeof RestApplication;
-export declare class FamilyTree_2Application extends FamilyTree_2Application_base {
+export declare class FamilyTreeApplication extends FamilyTreeApplication_base {
     constructor(options?: ApplicationConfig);
 }
 export {};
