@@ -1,7 +1,7 @@
 {
-  "name": "family-tree",
+  "name": "@loopback/example-family-tree",
   "version": "1.0.0",
-  "description": "family-tree",
+  "description": "An example LoopBack API designed to demonstrate the capabilities of OASGraph",
   "keywords": [
     "loopback-application",
     "loopback"
@@ -36,8 +36,9 @@
   "repository": {
     "type": "git"
   },
-  "author": "",
-  "license": "",
+  "author": "Alan Cha",
+  "copyright.owner": "IBM Corp.",
+  "license": "MIT",
   "files": [
     "README.md",
     "index.js",

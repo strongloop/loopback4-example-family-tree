@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2018. All Rights Reserved.
+// Node module: family-tree
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 import { FindRoute, InvokeMethod, ParseParams, Reject, RequestContext, Send, SequenceHandler } from '@loopback/rest';
 export declare class MySequence implements SequenceHandler {
     protected findRoute: FindRoute;

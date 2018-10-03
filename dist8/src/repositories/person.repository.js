@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2018. All Rights Reserved.
+// Node module: family-tree
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
