@@ -33,9 +33,250 @@ npm i
 npm start
 ```
 
+## OASGraph
+
+As mentioned before, the purpose of this repository is to demonstrate the capabilities of [OASGraph](https://github.com/strongloop/oasgraph).
+
+OASGraph can either be used as a [library](https://www.npmjs.com/package/oasgraph) or as a [CLI tool](https://www.npmjs.com/package/oasgraph-cli). In the following section, we will describe how this API can be wrapped using the CLI tool. 
+
+***
+
+First, install the CLI tool.
+
+```
+npm i -g oasgraph-cli
+```
+
+Second, start the Family Tree API.
+
+```
+cd loopback4-example-family-tree
+npm start
+```
+
+Third, create the GraphQL server using OASGraph.
+
+```
+oasgraph http://[::1]:3000/openapi.json -u http://[::1]:3000
+```
+
+Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy!
+
+***
+
+### Nested objects
+
+As of now, the GraphQL interface will __not__ have any nesting capabilities. To add these capabilities, you must define [link objects](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#linkObject) in the OAS. To read more, click [here](https://github.com/strongloop/oasgraph/tree/master/packages/oasgraph#nested-objects).
+
+***
+
+Example: To create `mother` and `father` fields, which will allow you to query a person's mother or father, follow the ensuing instructions.
+
+First, start the Family Tree API. 
+
+```
+cd loopback4-example-family-tree
+npm start
+```
+
+Second, save the OAS by going to [http://[::1]:3000/openapi.json](http://[::1]:3000/openapi.json). 
+Alternatively, run the following command. 
+
+```
+wget http://[::1]:3000/openapi.json
+```
+
+Third, open the OAS in a text editor. 
+
+Find the `/people/{id}` [path item object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#pathItemObject).
+
+It should look a bit like the following: 
+
+```json
+"/people/{id}": {
+    "get": {
+        "x-controller-name": "PersonController",
+        "x-operation-name": "findById",
+        "tags": [
+            "PersonController"
+        ],
+        "responses": {
+            "200": {
+                "description": "Person model instance",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Person"
+```
+
+Give the `get` [operation object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#operationObject) an `operationId`.
+
+```json
+"/people/{id}": {
+    "get": {
+        "operationId": "getPerson"
+```
+
+Add the links into the [response object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject).
+
+```json
+"/people/{id}": {
+    "get": {
+        "responses": {
+            "200": {
+                "links": {
+                    "mother": {
+                        "operationId": "getPerson",
+                        "parameters": {
+                            "id": "$response.body#/motherId"
+                        }
+                    },
+                    "father": {
+                        "operationId": "getPerson",
+                        "parameters": {
+                            "id": "$response.body#/fatherId"
+                        }
+                    }
+                }
+```
+
+Save the file and start the GraphQL server.
+
+```
+oasgraph openapi.json
+```
+
+Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy!
+
+***
+
+Now you can create complex queries like the following:
+
+```
+query {
+    person(id: 15) {
+        name
+        father {
+            name 
+            mother {
+                name
+                father {
+                    name
+                }
+            }
+        }
+    }
+}
+```
+
+__Please be aware that the data may not be dense enough to support deeply nested queries and the API server and consequently the GraphQL server as well will throw errors. Please refer to the [description](https://github.com/strongloop/loopback4-example-family-tree#description) for more information.__
+
+### Notes
+
+We needed to use the [`-u` or `-url` option](https://github.com/strongloop/oasgraph/tree/master/packages/oasgraph#options) because the auto-generated [OAS](https://github.com/OAI/OpenAPI-Specification) contains a placeholder [server object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#serverObject).
+
+The default server object should look like the following:
+
+```json
+"servers": [
+    {
+        "url": "/"
+    }
+]
+```
+
+OASGraph uses this object to form rest calls. Because this is an invalid base URL, we use the `-u` option to manually define a base URL. 
+
+Alternatively, the document could be saved and edited like so:
+
+```json
+"servers": [
+    {
+        "url": "http://[::1]:3000/"
+    }
+]
+```
+
+Then, you can run OASGraph without the `-u` option.
+
+```
+oasgraph openapi.json
+```
+
+***
+
+To go more in depth on nested objects... 
+
+Links allow the user to define design-time relationships between operations, suggesting how one operation can naturally lead to the next. 
+
+Let's take a look at the provided example.
+
+The following portion from the OAS describes an operation `GET {base URL}/people/{id}` that will return a `Person` object. 
+
+```json
+"/people/{id}": {
+    "get": {
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Person"
+```
+
+The `Person` object contains the following pieces of data:
+
+```json
+{
+    "title": "Person",
+    "properties": {
+        "id": {
+        "type": "number"
+        },
+        "name": {
+        "type": "string"
+        },
+        "generation": {
+        "type": "number"
+        },
+        "motherId": {
+        "type": "number"
+        },
+        "fatherId": {
+        "type": "number"
+        }
+    }
+}
+```
+
+Notice the `motherId` and `fatherId` fields.
+
+Now, take a look at the following links. 
+
+```json
+"links": {
+    "mother": {
+        "operationId": "getPerson",
+        "parameters": {
+            "id": "$response.body#/motherId"
+        }
+    },
+    "father": {
+        "operationId": "getPerson",
+        "parameters": {
+            "id": "$response.body#/fatherId"
+        }
+    }
+}
+```
+
+The links essentially say that when `GET {base URL}/people/{id}` returns a `Person` object, you can make a follow up call to get the mother or the father. The follow up call will be the operation that has the `operationId`: "getPerson". That operation is coincidentally also `GET {base URL}/people/{id}`. The `id` of the mother, which will be used in the `/people/{id}` path [parameter](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#parameterObject), is the `motherId` of the returned `Person` object. Using this knowledge, OASGraph is able to chain together multiple REST calls to get the mother or father of any person. 
+
+Another feature to note is that links are attached to GraphQL object types which means that any operation returning a `Person` (or a list of `Person`s) will also be able to query for the mother and the father, even if the links are defined elsewhere. 
+
 ## Examples
 
-Here are some queries you can do:
+Here are some queries you can do with the basic API:
 
 Query:
 ```
