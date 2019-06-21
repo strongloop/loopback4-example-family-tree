@@ -1,39 +1,46 @@
-// Copyright IBM Corp. 2018. All Rights Reserved.
-// Node module: family-tree
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
+import { Entity, model, property } from '@loopback/repository';
 
-import {Entity, model, property} from '@loopback/repository';
-
-@model()
+@model({ settings: {} })
 export class Person extends Entity {
   @property({
     type: 'number',
     id: true,
+    required: true,
   })
-  id?: number;
+  id: number;
 
   @property({
     type: 'string',
+    required: true,
   })
-  name?: string;
+  name: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  generation: string;
 
   @property({
     type: 'number',
+    required: true,
   })
-  generation?: number;
+  motherId: number;
 
   @property({
-    type: 'number',
+    type: 'string',
+    required: true,
   })
-  motherId?: number;
+  fatherId: string;
 
-  @property({
-    type: 'number',
-  })
-  fatherId?: number;
 
   constructor(data?: Partial<Person>) {
     super(data);
   }
 }
+
+export interface PersonRelations {
+  // describe navigational properties here
+}
+
+export type PersonWithRelations = Person & PersonRelations;

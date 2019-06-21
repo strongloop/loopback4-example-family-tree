@@ -1,15 +1,10 @@
-// Copyright IBM Corp. 2018. All Rights Reserved.
-// Node module: family-tree
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
-import {FamilyTreeApplication} from './application';
+import {Loopback4ExampleFamilyTree3Application} from './application';
 import {ApplicationConfig} from '@loopback/core';
 
-export {FamilyTreeApplication};
+export {Loopback4ExampleFamilyTree3Application};
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new FamilyTreeApplication(options);
+  const app = new Loopback4ExampleFamilyTree3Application(options);
   await app.boot();
   await app.start();
 

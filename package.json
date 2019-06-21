@@ -1,7 +1,7 @@
 {
-  "name": "@loopback/example-family-tree",
+  "name": "loopback4-example-family-tree3",
   "version": "1.0.0",
-  "description": "An example LoopBack API designed to demonstrate the capabilities of OASGraph",
+  "description": "Example API used to demonstrate OpenAPI-to-GraphQL",
   "keywords": [
     "loopback-application",
     "loopback"
@@ -11,24 +11,23 @@
     "node": ">=8.9"
   },
   "scripts": {
-    "build:all-dist": "npm run build:dist8 && npm run build:dist10",
-    "build:apidocs": "lb-apidocs",
     "build": "lb-tsc",
-    "build:dist8": "lb-tsc es2017",
-    "build:dist10": "lb-tsc es2018",
     "build:watch": "lb-tsc --watch",
-    "clean": "lb-clean dist*",
-    "lint": "npm run prettier:check && npm run tslint",
-    "lint:fix": "npm run tslint:fix && npm run prettier:fix",
+    "clean": "lb-clean dist tsconfig.build.tsbuildinfo",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
     "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
     "prettier:check": "npm run prettier:cli -- -l",
     "prettier:fix": "npm run prettier:cli -- --write",
-    "tslint": "lb-tslint",
-    "tslint:fix": "npm run tslint -- --fix",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run clean && npm run build",
-    "test": "lb-mocha --allow-console-logs \"DIST/test\"",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs DIST/test/**/*.js && npm run posttest",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t loopback4-example-family-tree3 .",
+    "docker:run": "docker run -p 3000:3000 -d loopback4-example-family-tree3",
+    "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "start": "node .",
     "prepublishOnly": "npm run test"
@@ -36,30 +35,37 @@
   "repository": {
     "type": "git"
   },
-  "author": "Alan Cha",
-  "copyright.owner": "IBM Corp.",
-  "license": "MIT",
+  "author": "",
+  "license": "",
   "files": [
     "README.md",
     "index.js",
     "index.d.ts",
-    "dist*/src",
-    "dist*/index*",
-    "src"
+    "dist",
+    "src",
+    "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^0.14.2",
-    "@loopback/context": "^0.12.12",
-    "@loopback/core": "^0.11.13",
-    "@loopback/dist-util": "^0.3.7",
-    "@loopback/openapi-v3": "^0.15.1",
-    "@loopback/repository": "^0.18.1",
-    "@loopback/rest": "^0.25.1",
-    "@loopback/service-proxy": "^0.8.7"
+    "@loopback/boot": "^1.4.2",
+    "@loopback/context": "^1.20.0",
+    "@loopback/core": "^1.8.3",
+    "@loopback/openapi-v3": "^1.6.3",
+    "@loopback/repository": "^1.8.0",
+    "@loopback/rest": "^1.16.1",
+    "@loopback/rest-explorer": "^1.2.3",
+    "@loopback/service-proxy": "^1.2.3"
   },
   "devDependencies": {
-    "@loopback/build": "^0.7.4",
-    "@loopback/testlab": "^0.14.1",
-    "@types/node": "^10.11.2"
+    "@loopback/build": "^2.0.1",
+    "@loopback/testlab": "^1.6.1",
+    "@types/node": "^10.14.9",
+    "@typescript-eslint/parser": "^1.10.2",
+    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@loopback/eslint-config": "^1.1.2",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-eslint-plugin": "^2.1.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "typescript": "~3.5.2"
   }
 }

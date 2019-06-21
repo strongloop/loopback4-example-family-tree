@@ -1,17 +1,20 @@
-// Copyright IBM Corp. 2018. All Rights Reserved.
-// Node module: family-tree
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
-import {Filter, repository, Where} from '@loopback/repository';
-
+import {
+  Count,
+  CountSchema,
+  Filter,
+  repository,
+  Where,
+} from '@loopback/repository';
 import {
   post,
   param,
   get,
+  getFilterSchemaFor,
+  getWhereSchemaFor,
   patch,
+  put,
   del,
-  requestBody
+  requestBody,
 } from '@loopback/rest';
 import {Person} from '../models';
 import {PersonRepository} from '../repositories';
@@ -26,12 +29,11 @@ export class PersonController {
     responses: {
       '200': {
         description: 'Person model instance',
-        content: {'application/json': {'x-ts-type': Person}},
+        content: {'application/json': {schema: {'x-ts-type': Person}}},
       },
     },
   })
-  async create(@requestBody() person: Person)
-    : Promise<Person> {
+  async create(@requestBody() person: Person): Promise<Person> {
     return await this.personRepository.create(person);
   }
 
@@ -39,11 +41,13 @@ export class PersonController {
     responses: {
       '200': {
         description: 'Person model count',
-        content: {'application/json': {'x-ts-type': Number}},
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
-  async count(@param.query.string('where') where?: Where): Promise<number> {
+  async count(
+    @param.query.object('where', getWhereSchemaFor(Person)) where?: Where<Person>,
+  ): Promise<Count> {
     return await this.personRepository.count(where);
   }
 
@@ -59,8 +63,9 @@ export class PersonController {
       },
     },
   })
-  async find(@param.query.string('filter') filter?: Filter)
-    : Promise<Person[]> {
+  async find(
+    @param.query.object('filter', getFilterSchemaFor(Person)) filter?: Filter<Person>,
+  ): Promise<Person[]> {
     return await this.personRepository.find(filter);
   }
 
@@ -68,14 +73,14 @@ export class PersonController {
     responses: {
       '200': {
         description: 'Person PATCH success count',
-        content: {'application/json': {'x-ts-type': Number}},
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody() person: Person,
-    @param.query.string('where') where?: Where
-  ): Promise<number> {
+    @param.query.object('where', getWhereSchemaFor(Person)) where?: Where<Person>,
+  ): Promise<Count> {
     return await this.personRepository.updateAll(person, where);
   }
 
@@ -83,7 +88,7 @@ export class PersonController {
     responses: {
       '200': {
         description: 'Person model instance',
-        content: {'application/json': {'x-ts-type': Person}},
+        content: {'application/json': {schema: {'x-ts-type': Person}}},
       },
     },
   })
@@ -100,9 +105,23 @@ export class PersonController {
   })
   async updateById(
     @param.path.number('id') id: number,
-    @requestBody() person: Person
+    @requestBody() person: Person,
   ): Promise<void> {
     await this.personRepository.updateById(id, person);
+  }
+
+  @put('/people/{id}', {
+    responses: {
+      '204': {
+        description: 'Person PUT success',
+      },
+    },
+  })
+  async replaceById(
+    @param.path.number('id') id: number,
+    @requestBody() person: Person,
+  ): Promise<void> {
+    await this.personRepository.replaceById(id, person);
   }
 
   @del('/people/{id}', {
