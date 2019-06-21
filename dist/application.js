@@ -7,7 +7,7 @@ const rest_1 = require("@loopback/rest");
 const service_proxy_1 = require("@loopback/service-proxy");
 const path = require("path");
 const sequence_1 = require("./sequence");
-class Loopback4ExampleFamilyTree3Application extends boot_1.BootMixin(service_proxy_1.ServiceMixin(repository_1.RepositoryMixin(rest_1.RestApplication))) {
+class Loopback4ExampleFamilyTreeApplication extends boot_1.BootMixin(service_proxy_1.ServiceMixin(repository_1.RepositoryMixin(rest_1.RestApplication))) {
     constructor(options = {}) {
         super(options);
         // Set up the custom sequence
@@ -31,5 +31,5 @@ class Loopback4ExampleFamilyTree3Application extends boot_1.BootMixin(service_pr
         };
     }
 }
-exports.Loopback4ExampleFamilyTree3Application = Loopback4ExampleFamilyTree3Application;
+exports.Loopback4ExampleFamilyTreeApplication = Loopback4ExampleFamilyTreeApplication;
 //# sourceMappingURL=application.js.map

@@ -1,6 +1,6 @@
 import { ApplicationConfig } from '@loopback/core';
 import { RestApplication } from '@loopback/rest';
-declare const Loopback4ExampleFamilyTree3Application_base: (new (...args: any[]) => {
+declare const Loopback4ExampleFamilyTreeApplication_base: (new (...args: any[]) => {
     [x: string]: any;
     projectRoot: string;
     bootOptions?: import("@loopback/boot").BootOptions | undefined;
@@ -22,7 +22,7 @@ declare const Loopback4ExampleFamilyTree3Application_base: (new (...args: any[])
     mountComponentRepositories(component: import("@loopback/repository").Class<unknown>): void;
     migrateSchema(options?: import("@loopback/repository").SchemaMigrationOptions | undefined): Promise<void>;
 }) & typeof RestApplication;
-export declare class Loopback4ExampleFamilyTree3Application extends Loopback4ExampleFamilyTree3Application_base {
+export declare class Loopback4ExampleFamilyTreeApplication extends Loopback4ExampleFamilyTreeApplication_base {
     constructor(options?: ApplicationConfig);
 }
 export {};

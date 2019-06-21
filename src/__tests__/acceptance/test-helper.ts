@@ -1,4 +1,4 @@
-import {Loopback4ExampleFamilyTree3Application} from '../..';
+import {Loopback4ExampleFamilyTreeApplication} from '../..';
 import {
   createRestAppClient,
   givenHttpServerConfig,
@@ -14,7 +14,7 @@ export async function setupApplication(): Promise<AppWithClient> {
     // port: +process.env.PORT,
   });
 
-  const app = new Loopback4ExampleFamilyTree3Application({
+  const app = new Loopback4ExampleFamilyTreeApplication({
     rest: restConfig,
   });
 
@@ -27,6 +27,6 @@ export async function setupApplication(): Promise<AppWithClient> {
 }
 
 export interface AppWithClient {
-  app: Loopback4ExampleFamilyTree3Application;
+  app: Loopback4ExampleFamilyTreeApplication;
   client: Client;
 }

@@ -1190,15 +1190,15 @@
         "signature": "12adc5a23f10b90be8af6e46a970bdbd4887160e9cd9ca73b877511d2dfcf7c5"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/application.ts": {
-        "version": "828aa2a3ed7b675c9a7d035b80f38406b367e39ac2c74c9fbfaf5279cd49356d",
-        "signature": "dd1d8d85a8e41ba2291057b9ea445531903e05ce145e0c3a66bccc5a2712ff00"
+        "version": "6f4d17a242675d412e670fc685e80bb7cb814106228b6c31a29addad5ef65e4c",
+        "signature": "8aa9f5c580b57266694be962ee6cfd9fd01bdd1ad76f30587fc37be5a6b9ba64"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/index.ts": {
-        "version": "8452b13265b12d25dd4868aa318ee50ad83e7f304178a1ef9e95d97112e7cce6",
-        "signature": "ef1c3a57dc2254425ef1c8c09d19b5ecf19ce0912ef8fff03ece896a5b40e46b"
+        "version": "4348a894ce6136be24a877843a739a349bd7b987d20e7ce0327e24589e576f6d",
+        "signature": "4f7deefabd932f38c4ef6d53c30f32c55bb3a9399a661305dc6139495963d70b"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/migrate.ts": {
-        "version": "604a9bd8b1efbd11798f58677a336b40941ab1190235237165930c8160c0ab3c",
+        "version": "c474bf3bc5e326c57d435bfb3f6db12698d74cb6665c79c24f4a81e63f83a4e8",
         "signature": "d289609b56df6411204c89f5197dc2d4d19910336a10c86cd9b3af21b22e344d"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/node_modules/@types/cookiejar/index.d.ts": {
@@ -1278,15 +1278,15 @@
         "signature": "7a2e61c39a796bc532f2ae96df4d20652613935311d2a1798f5374a1d07ca732"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/__tests__/acceptance/test-helper.ts": {
-        "version": "9307eb479994f9794680bcc6577ebc6b9a6b1998d10db2a2fe2864c038cb035c",
-        "signature": "6dd2e658c1ab93195f1487252d08eb32b81b4d67b4cf48a06da0ab5a67894a95"
+        "version": "aadfe6fcb85c07a1eaf294173a4db238bcd17ad799be06351e3c6fad36cab222",
+        "signature": "a23654dd34e76317030f38ccb26537f3d1a62034dd42dd15de57723c14e817ff"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/__tests__/acceptance/home-page.acceptance.ts": {
-        "version": "ae454babaad57af8ee1f5a7ede83ed1e517177fde61e78113daf3c2dcc4d1acf",
+        "version": "b054be1397e45e4ee71a08768a533f32718f5b2e8d08aa7caf541b351340b80d",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/__tests__/acceptance/ping.controller.acceptance.ts": {
-        "version": "96a097a8ca6776b1b5e6a8dbda92df1041a52cc0173a9d5e8da697caa1e9acc8",
+        "version": "b7b15c2eb4ec6a5f22aa443dd29c147a505c0e0d9d73714486f733f9e51d42ac",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
       },
       "/users/alan.cha/documents/work/loopback4-example-family-tree/src/controllers/ping.controller.ts": {

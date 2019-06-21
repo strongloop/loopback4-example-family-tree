@@ -2,7 +2,7 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
-An example application made with LoopBack 4 for the purpose of demonstrating [OASGraph](https://github.com/strongloop/oasgraph), a tool that can create GraphQL interfaces for APIs described with [OpenAPI specifications](https://www.openapis.org/) (OAS).
+An example application made with LoopBack 4 for the purpose of demonstrating [OpenAPI-to-GraphQL](https://github.com/ibm/openapi-to-graphql), a tool that can create GraphQL interfaces for APIs described with [OpenAPI specifications](https://www.openapis.org/) (OAS).
 
 ## Description
 
@@ -33,18 +33,18 @@ npm i
 npm start
 ```
 
-## OASGraph
+## OpenAPI-to-GraphQL
 
-As mentioned before, the purpose of this repository is to demonstrate the capabilities of [OASGraph](https://github.com/strongloop/oasgraph).
+As mentioned before, the purpose of this repository is to demonstrate the capabilities of [OpenAPI-to-GraphQL](https://github.com/ibm/openapi-to-graphql).
 
-OASGraph can either be used as a [library](https://www.npmjs.com/package/oasgraph) or as a [CLI tool](https://www.npmjs.com/package/oasgraph-cli). In the following section, we will describe how this API can be wrapped using the CLI tool. 
+OpenAPI-to-GraphQL can either be used as a [library](https://www.npmjs.com/package/openapi-to-graphql) or as a [CLI tool](https://www.npmjs.com/package/openapi-to-graphql-cli). In the following section, we will describe how this API can be wrapped using the CLI tool. 
 
 ***
 
 First, install the CLI tool.
 
 ```
-npm i -g oasgraph-cli
+npm i -g openapi-to-graphql-cli
 ```
 
 Second, start the Family Tree API.
@@ -54,10 +54,10 @@ cd loopback4-example-family-tree
 npm start
 ```
 
-Third, create the GraphQL server using OASGraph.
+Third, create the GraphQL server using OpenAPI-to-GraphQL.
 
 ```
-oasgraph http://[::1]:3000/openapi.json -u http://[::1]:3000
+openapi-to-graphql http://[::1]:3001/openapi.json -u http://[::1]:3001
 ```
 
 Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy!
@@ -66,7 +66,7 @@ Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy
 
 ### Nested objects
 
-As of now, the GraphQL interface will __not__ have any nesting capabilities. To add these capabilities, you must define [link objects](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#linkObject) in the OAS. To read more, click [here](https://github.com/strongloop/oasgraph/tree/master/packages/oasgraph#nested-objects).
+As of now, the GraphQL interface will __not__ have any nesting capabilities. To add these capabilities, you must define [link objects](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#linkObject) in the OAS. To read more, click [here](https://github.com/ibm/openapi-to-graphql/tree/master/packages/openapi-to-graphql#nested-objects).
 
 ***
 
@@ -79,11 +79,11 @@ cd loopback4-example-family-tree
 npm start
 ```
 
-Second, save the OAS by going to [http://[::1]:3000/openapi.json](http://[::1]:3000/openapi.json). 
+Second, save the OAS by going to [http://[::1]:3001/openapi.json](http://[::1]:3001/openapi.json). 
 Alternatively, run the following command. 
 
 ```
-wget http://[::1]:3000/openapi.json
+wget http://[::1]:3001/openapi.json
 ```
 
 Third, open the OAS in a text editor. 
@@ -143,7 +143,7 @@ Add the links into the [response object](https://github.com/OAI/OpenAPI-Specific
 Save the file and start the GraphQL server.
 
 ```
-oasgraph openapi.json
+openapi-to-graphql openapi.json
 ```
 
 Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy!
@@ -173,7 +173,7 @@ __Please be aware that the data may not be dense enough to support deeply nested
 
 ### Notes
 
-We needed to use the [`-u` or `-url` option](https://github.com/strongloop/oasgraph/tree/master/packages/oasgraph#options) because the auto-generated [OAS](https://github.com/OAI/OpenAPI-Specification) contains a placeholder [server object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#serverObject).
+We needed to use the [`-u` or `-url` option](https://github.com/ibm/openapi-to-graphql/tree/master/packages/openapi-to-graphql#options) because the auto-generated [OAS](https://github.com/OAI/OpenAPI-Specification) contains a placeholder [server object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#serverObject).
 
 The default server object should look like the following:
 
@@ -185,22 +185,22 @@ The default server object should look like the following:
 ]
 ```
 
-OASGraph uses this object to form rest calls. Because this is an invalid base URL, we use the `-u` option to manually define a base URL. 
+OpenAPI-to-GraphQL uses this object to form rest calls. Because this is an invalid base URL, we use the `-u` option to manually define a base URL. 
 
 Alternatively, the document could be saved and edited like so:
 
 ```json
 "servers": [
     {
-        "url": "http://[::1]:3000/"
+        "url": "http://[::1]:3001/"
     }
 ]
 ```
 
-Then, you can run OASGraph without the `-u` option.
+Then, you can run OpenAPI-to-GraphQL without the `-u` option.
 
 ```
-oasgraph openapi.json
+openapi-to-graphql openapi.json
 ```
 
 ***
@@ -270,7 +270,7 @@ Now, take a look at the following links.
 }
 ```
 
-The links essentially say that when `GET {base URL}/people/{id}` returns a `Person` object, you can make a follow up call to get the mother or the father. The follow up call will be the operation that has the `operationId`: "getPerson". That operation is coincidentally also `GET {base URL}/people/{id}`. The `id` of the mother, which will be used in the `/people/{id}` path [parameter](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#parameterObject), is the `motherId` of the returned `Person` object. Using this knowledge, OASGraph is able to chain together multiple REST calls to get the mother or father of any person. 
+The links essentially say that when `GET {base URL}/people/{id}` returns a `Person` object, you can make a follow up call to get the mother or the father. The follow up call will be the operation that has the `operationId`: "getPerson". That operation is coincidentally also `GET {base URL}/people/{id}`. The `id` of the mother, which will be used in the `/people/{id}` path [parameter](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#parameterObject), is the `motherId` of the returned `Person` object. Using this knowledge, OpenAPI-to-GraphQL is able to chain together multiple REST calls to get the mother or father of any person. 
 
 Another feature to note is that links are attached to GraphQL object types which means that any operation returning a `Person` (or a list of `Person`s) will also be able to query for the mother and the father, even if the links are defined elsewhere. 
 
@@ -280,7 +280,7 @@ Here are some queries you can do with the basic API:
 
 Query:
 ```
-GET http://[::1]:3000/people/
+GET http://[::1]:3001/people/
 ```
 
 Response:
@@ -338,7 +338,7 @@ Response:
 
 Query:
 ```
-GET http://[::1]:3000/people/1
+GET http://[::1]:3001/people/1
 ```
 
 Response:

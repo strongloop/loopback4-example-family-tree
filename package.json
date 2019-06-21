@@ -1,5 +1,5 @@
 {
-  "name": "loopback4-example-family-tree3",
+  "name": "loopback4-example-family-tree",
   "version": "1.0.0",
   "description": "Example API used to demonstrate OpenAPI-to-GraphQL",
   "keywords": [
@@ -25,8 +25,8 @@
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "docker:build": "docker build -t loopback4-example-family-tree3 .",
-    "docker:run": "docker run -p 3000:3000 -d loopback4-example-family-tree3",
+    "docker:build": "docker build -t loopback4-example-family-tree .",
+    "docker:run": "docker run -p 3001:3001 -d loopback4-example-family-tree",
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "start": "node .",

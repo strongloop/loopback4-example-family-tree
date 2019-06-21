@@ -1,10 +1,10 @@
-import {Loopback4ExampleFamilyTree3Application} from './application';
+import {Loopback4ExampleFamilyTreeApplication} from './application';
 
 export async function migrate(args: string[]) {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
   console.log('Migrating schemas (%s existing schema)', existingSchema);
 
-  const app = new Loopback4ExampleFamilyTree3Application();
+  const app = new Loopback4ExampleFamilyTreeApplication();
   await app.boot();
   await app.migrateSchema({existingSchema});
 

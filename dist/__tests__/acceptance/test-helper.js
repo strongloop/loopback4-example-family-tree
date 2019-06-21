@@ -10,7 +10,7 @@ async function setupApplication() {
     // host: process.env.HOST,
     // port: +process.env.PORT,
     });
-    const app = new __1.Loopback4ExampleFamilyTree3Application({
+    const app = new __1.Loopback4ExampleFamilyTreeApplication({
         rest: restConfig,
     });
     await app.boot();

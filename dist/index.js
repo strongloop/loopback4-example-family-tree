@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const application_1 = require("./application");
-exports.Loopback4ExampleFamilyTree3Application = application_1.Loopback4ExampleFamilyTree3Application;
+exports.Loopback4ExampleFamilyTreeApplication = application_1.Loopback4ExampleFamilyTreeApplication;
 async function main(options = {}) {
-    const app = new application_1.Loopback4ExampleFamilyTree3Application(options);
+    const app = new application_1.Loopback4ExampleFamilyTreeApplication(options);
     await app.boot();
     await app.start();
     const url = app.restServer.url;

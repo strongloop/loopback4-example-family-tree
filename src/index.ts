@@ -1,10 +1,10 @@
-import {Loopback4ExampleFamilyTree3Application} from './application';
+import {Loopback4ExampleFamilyTreeApplication} from './application';
 import {ApplicationConfig} from '@loopback/core';
 
-export {Loopback4ExampleFamilyTree3Application};
+export {Loopback4ExampleFamilyTreeApplication};
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new Loopback4ExampleFamilyTree3Application(options);
+  const app = new Loopback4ExampleFamilyTreeApplication(options);
   await app.boot();
   await app.start();
 

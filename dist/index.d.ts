@@ -1,4 +1,4 @@
-import { Loopback4ExampleFamilyTree3Application } from './application';
+import { Loopback4ExampleFamilyTreeApplication } from './application';
 import { ApplicationConfig } from '@loopback/core';
-export { Loopback4ExampleFamilyTree3Application };
-export declare function main(options?: ApplicationConfig): Promise<Loopback4ExampleFamilyTree3Application>;
+export { Loopback4ExampleFamilyTreeApplication };
+export declare function main(options?: ApplicationConfig): Promise<Loopback4ExampleFamilyTreeApplication>;
