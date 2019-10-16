@@ -57,10 +57,10 @@ npm start
 Third, create the GraphQL server using OpenAPI-to-GraphQL.
 
 ```
-openapi-to-graphql http://[::1]:3001/openapi.json -u http://[::1]:3001
+openapi-to-graphql http://localhost:3001/openapi.json
 ```
 
-Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy!
+Head to [http://localhost:3000/graphql](http://localhost:3000/graphql) and enjoy!
 
 ***
 
@@ -79,11 +79,11 @@ cd loopback4-example-family-tree
 npm start
 ```
 
-Second, save the OAS by going to [http://[::1]:3001/openapi.json](http://[::1]:3001/openapi.json). 
+Second, save the OAS by going to [http://localhost:3001/openapi.json](http://localhost:3001/openapi.json). 
 Alternatively, run the following command. 
 
 ```
-wget http://[::1]:3001/openapi.json
+wget http://localhost:3001/openapi.json
 ```
 
 Third, open the OAS in a text editor. 
@@ -95,11 +95,7 @@ It should look a bit like the following:
 ```json
 "/people/{id}": {
     "get": {
-        "x-controller-name": "PersonController",
-        "x-operation-name": "findById",
-        "tags": [
-            "PersonController"
-        ],
+        "operationId": "PersonController.findById",
         "responses": {
             "200": {
                 "description": "Person model instance",
@@ -109,30 +105,23 @@ It should look a bit like the following:
                             "$ref": "#/components/schemas/Person"
 ```
 
-Give the `get` [operation object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#operationObject) an `operationId`.
-
-```json
-"/people/{id}": {
-    "get": {
-        "operationId": "getPerson"
-```
-
 Add the links into the [response object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject).
 
 ```json
 "/people/{id}": {
     "get": {
+        "operationId": "PersonController.findById",
         "responses": {
             "200": {
                 "links": {
                     "mother": {
-                        "operationId": "getPerson",
+                        "operationId": "PersonController.findById",
                         "parameters": {
                             "id": "$response.body#/motherId"
                         }
                     },
                     "father": {
-                        "operationId": "getPerson",
+                        "operationId": "PersonController.findById",
                         "parameters": {
                             "id": "$response.body#/fatherId"
                         }
@@ -146,7 +135,7 @@ Save the file and start the GraphQL server.
 openapi-to-graphql openapi.json
 ```
 
-Head to [http://localhost:3001/graphql](http://localhost:3001/graphql) and enjoy!
+Head to [http://localhost:3000/graphql](http://localhost:3000/graphql) and enjoy!
 
 ***
 
@@ -172,38 +161,6 @@ query {
 __Please be aware that the data may not be dense enough to support deeply nested queries and the API server and consequently the GraphQL server as well will throw errors. Please refer to the [description](https://github.com/strongloop/loopback4-example-family-tree#description) for more information.__
 
 ### Notes
-
-We needed to use the [`-u` or `-url` option](https://github.com/ibm/openapi-to-graphql/tree/master/packages/openapi-to-graphql#options) because the auto-generated [OAS](https://github.com/OAI/OpenAPI-Specification) contains a placeholder [server object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#serverObject).
-
-The default server object should look like the following:
-
-```json
-"servers": [
-    {
-        "url": "/"
-    }
-]
-```
-
-OpenAPI-to-GraphQL uses this object to form rest calls. Because this is an invalid base URL, we use the `-u` option to manually define a base URL. 
-
-Alternatively, the document could be saved and edited like so:
-
-```json
-"servers": [
-    {
-        "url": "http://[::1]:3001/"
-    }
-]
-```
-
-Then, you can run OpenAPI-to-GraphQL without the `-u` option.
-
-```
-openapi-to-graphql openapi.json
-```
-
-***
 
 To go more in depth on nested objects... 
 
@@ -256,13 +213,13 @@ Now, take a look at the following links.
 ```json
 "links": {
     "mother": {
-        "operationId": "getPerson",
+        "operationId": "PersonController.findById",
         "parameters": {
             "id": "$response.body#/motherId"
         }
     },
     "father": {
-        "operationId": "getPerson",
+        "operationId": "PersonController.findById",
         "parameters": {
             "id": "$response.body#/fatherId"
         }
@@ -270,7 +227,7 @@ Now, take a look at the following links.
 }
 ```
 
-The links essentially say that when `GET {base URL}/people/{id}` returns a `Person` object, you can make a follow up call to get the mother or the father. The follow up call will be the operation that has the `operationId`: "getPerson". That operation is coincidentally also `GET {base URL}/people/{id}`. The `id` of the mother, which will be used in the `/people/{id}` path [parameter](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#parameterObject), is the `motherId` of the returned `Person` object. Using this knowledge, OpenAPI-to-GraphQL is able to chain together multiple REST calls to get the mother or father of any person. 
+The links essentially say that when `GET {base URL}/people/{id}` returns a `Person` object, you can make a follow up call to get the mother or the father. The follow up call will be the operation that has the `operationId`: "PersonController.findById". That operation is coincidentally also `GET {base URL}/people/{id}`. The `id` of the mother, which will be used in the `/people/{id}` path [parameter](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#parameterObject), is the `motherId` of the returned `Person` object. Using this knowledge, OpenAPI-to-GraphQL is able to chain together multiple REST calls to get the mother or father of any person. 
 
 Another feature to note is that links are attached to GraphQL object types which means that any operation returning a `Person` (or a list of `Person`s) will also be able to query for the mother and the father, even if the links are defined elsewhere. 
 
@@ -280,7 +237,7 @@ Here are some queries you can do with the basic API:
 
 Query:
 ```
-GET http://[::1]:3001/people/
+GET http://localhost:3001/people/
 ```
 
 Response:
@@ -338,7 +295,7 @@ Response:
 
 Query:
 ```
-GET http://[::1]:3001/people/1
+GET http://localhost:3001/people/1
 ```
 
 Response:
